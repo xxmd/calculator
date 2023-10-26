@@ -1,5 +1,7 @@
 package io.github.xxmd.calculator.entity;
 
+import android.widget.TextView;
+
 import androidx.annotation.DrawableRes;
 
 import java.util.List;
@@ -12,9 +14,9 @@ public class Item {
     public int icon;
     public String label;
     public ItemType type;
-    BiFunction<Double, Double, Double> binaryFunction;
-    BiConsumer<List<String>, String> instruction;
-    Function<Double, Double> function;
+    public BiFunction<Double, Double, Double> binaryFunction;
+    public TriConsumer<List<String>, List<String>, TextView> instruction;
+    public Function<Double, Double> function;
     public int backgroundColor;
     public int labelColor;
 
@@ -25,13 +27,13 @@ public class Item {
         this.binaryFunction = binaryFunction;
     }
 
-    public Item(int icon, BiConsumer<List<String>, String> instruction) {
+    public Item(int icon, TriConsumer<List<String>, List<String>, TextView> instruction) {
         this.icon = icon;
         this.type = ItemType.INSTRUCTION;
         this.instruction = instruction;
     }
 
-    public Item(int icon, String label, BiConsumer<List<String>, String> instruction) {
+    public Item(int icon, String label, TriConsumer<List<String>, List<String>, TextView> instruction) {
         this.icon = icon;
         this.label = label;
         this.type = ItemType.INSTRUCTION;

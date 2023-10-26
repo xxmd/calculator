@@ -55,9 +55,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             viewHolder.imageView.setColorFilter(item.labelColor);
         }
         if (item.backgroundColor != 0) {
-            GradientDrawable backgroundDrawable = (GradientDrawable) viewHolder.imageView.getBackground();
+            GradientDrawable backgroundDrawable = (GradientDrawable) viewHolder.itemView.getBackground();
             backgroundDrawable.setColor(item.backgroundColor);
-            viewHolder.imageView.setBackground(backgroundDrawable);
+            viewHolder.itemView.setBackground(backgroundDrawable);
         }
         viewHolder.itemView.setOnClickListener(view -> {
             if (onItemClick != null) {
