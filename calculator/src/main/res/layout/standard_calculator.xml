@@ -9,11 +9,19 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:gravity="right"
+        android:textSize="30sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_visual_expression"/>
 
     <TextView
+        android:maxLines="1"
+        android:text="0"
+        android:gravity="right"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_result"/>

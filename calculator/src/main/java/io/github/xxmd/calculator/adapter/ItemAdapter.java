@@ -1,6 +1,6 @@
 package io.github.xxmd.calculator.adapter;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,29 +14,32 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import io.github.xxmd.calculator.R;
-import io.github.xxmd.calculator.entity.Item;
-import io.github.xxmd.calculator.entity.ItemType;
+import io.github.xxmd.calculator.entity.KeyboardItem;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    private List<Item> itemList;
+    private final int equalBtnBgColor;
+    private final int imageTint;
+    private List<KeyboardItem> itemList;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView imageView;
 
         public ViewHolder(View view) {
             super(view);
-            imageView = (ImageView) view.findViewById(R.id.image_button);
+            imageView = view.findViewById(R.id.image_button);
         }
     }
 
-    private Consumer<Item> onItemClick;
+    private Consumer<KeyboardItem> onItemClick;
 
-    public void setOnItemClick(Consumer<Item> onItemClick) {
+    public void setOnItemClick(Consumer<KeyboardItem> onItemClick) {
         this.onItemClick = onItemClick;
     }
 
-    public ItemAdapter(List<Item> itemList) {
+    public ItemAdapter(List<KeyboardItem> itemList) {
         this.itemList = itemList;
+        imageTint = Color.parseColor("#1b1b1b");
+        equalBtnBgColor = Color.parseColor("#005a9e");
     }
     @NonNull
     @Override
@@ -49,16 +52,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Item item = itemList.get(position);
+        KeyboardItem item = itemList.get(position);
         viewHolder.imageView.setImageResource(item.icon);
-        if (item.labelColor != 0) {
-            viewHolder.imageView.setColorFilter(item.labelColor);
-        }
-        if (item.backgroundColor != 0) {
-            GradientDrawable backgroundDrawable = (GradientDrawable) viewHolder.itemView.getBackground();
-            backgroundDrawable.setColor(item.backgroundColor);
-            viewHolder.itemView.setBackground(backgroundDrawable);
-        }
+        boolean isEqual = item.equals(KeyboardItem.EQUAL);
+        viewHolder.imageView.setColorFilter(isEqual ? Color.WHITE : imageTint);
+        GradientDrawable backgroundDrawable = (GradientDrawable) viewHolder.itemView.getBackground();
+        backgroundDrawable.setColor(isEqual ? equalBtnBgColor : Color.WHITE);
+        viewHolder.itemView.setBackground(backgroundDrawable);
         viewHolder.itemView.setOnClickListener(view -> {
             if (onItemClick != null) {
                 onItemClick.accept(item);
